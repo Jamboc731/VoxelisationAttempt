@@ -7,7 +7,7 @@ public class Voxelize : MonoBehaviour {
     public GameObject voxel;
     public SkinnedMeshRenderer sMRend;
     private Mesh mesh;
-    private Vector3 [] verts;
+    private int [] verts;
     private Transform [] bones;
     private List<GameObject> voxels;
     private float dist;
@@ -18,18 +18,21 @@ public class Voxelize : MonoBehaviour {
     {
         mesh = sMRend.sharedMesh;
         sMRend.sharedMesh = null;
-        verts = mesh.vertices;
+        verts = mesh.triangles;
         voxels = new List<GameObject> ();
+        for (int i = 0; i < 10; i++)
+        {
+
+            Debug.Log (verts[i]);
+        }
 
         for(int i = 0; i < verts.Length; i++)
         {
-            if (Physics.OverlapBox (transform.TransformPoint (verts [i]), voxel.transform.localScale/2).Length < 1)
-            {
-                Debug.Log (transform.TransformPoint (verts [i]));
-                GameObject inst = Instantiate (voxel, transform.TransformPoint (verts [i]), Quaternion.identity);
-                Debug.Log (inst);
-                voxels.Add (inst);
-            }
+            //if (Physics.OverlapBox (transform.TransformPoint (verts [i]), voxel.transform.localScale / 2).Length < 1)
+            //{
+            //    GameObject inst = Instantiate (voxel, transform.TransformPoint (verts [i]), Quaternion.identity);
+            //    voxels.Add (inst);
+            //}
         }
 
         bones = sMRend.bones;
