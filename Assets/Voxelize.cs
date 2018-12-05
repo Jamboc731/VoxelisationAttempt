@@ -24,6 +24,7 @@ public class Voxelize : MonoBehaviour {
     //public Camera cam;
     public int deathDelay;
     private List<GameObject> points;
+    public bool ShouldUndie;
 
     private void Start()
     {
@@ -92,8 +93,8 @@ public class Voxelize : MonoBehaviour {
         voxels = tempVox.OrderBy(tempVox => tempVox.transform.position.y).ToList();
 
         voxels.Reverse();
-
-        StartCoroutine(Die());
+        if (ShouldUndie)
+            StartCoroutine (Die());
 
     }
 
@@ -138,7 +139,7 @@ public class Voxelize : MonoBehaviour {
             }
             yield return new WaitForSeconds(0.00001f);
         }
-
+        
         StartCoroutine(Undie());
         
     }
@@ -173,6 +174,7 @@ public class Voxelize : MonoBehaviour {
         for (int i = 0; i < voxels.Count; i++)
         {
             voxels[i].transform.SetParent(points[i].transform);
+            voxels [i].transform.rotation = Quaternion.identity;
             voxels[i].GetComponent<Rotatey>().enabled = true;
         }
 
@@ -186,5 +188,12 @@ public class Voxelize : MonoBehaviour {
     //        Gizmos.DrawSphere(bone.position, 0.01f);
     //    }
     //}
+
+}
+
+class RebuildSystem : ComponentSystem
+{
+
+
 
 }

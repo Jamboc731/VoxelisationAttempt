@@ -113,6 +113,45 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &28166374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 0104fd79a9cc67046b2ff554e5b6c8cc,
+    type: 3}
+  m_PrefabInternal: {fileID: 824770012}
+--- !u!114 &28166376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 28166374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51eae6c9460da41488fbcb5cdf2d39b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voxel: {fileID: 1003761417340038, guid: 367e73669c0a7ad44a2ef5a231473cdb, type: 2}
+  sMRend: {fileID: 28166378}
+  deathDelay: 25
+  ShouldUndie: 1
+--- !u!64 &28166377
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 28166374}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300002, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+--- !u!137 &28166378 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 0104fd79a9cc67046b2ff554e5b6c8cc,
+    type: 3}
+  m_PrefabInternal: {fileID: 824770012}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +218,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &382463870 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: 0104fd79a9cc67046b2ff554e5b6c8cc,
+    type: 3}
+  m_PrefabInternal: {fileID: 824770012}
+--- !u!114 &382463872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 382463870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51eae6c9460da41488fbcb5cdf2d39b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voxel: {fileID: 1003761417340038, guid: 367e73669c0a7ad44a2ef5a231473cdb, type: 2}
+  sMRend: {fileID: 382463874}
+  deathDelay: 15
+  ShouldUndie: 1
+--- !u!64 &382463873
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 382463870}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+--- !u!137 &382463874 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700002, guid: 0104fd79a9cc67046b2ff554e5b6c8cc,
+    type: 3}
+  m_PrefabInternal: {fileID: 824770012}
 --- !u!1 &450153072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100006, guid: 6b60e937d3743bc498ed2ff117b1388f,
@@ -212,6 +290,7 @@ MonoBehaviour:
   voxel: {fileID: 1003761417340038, guid: 367e73669c0a7ad44a2ef5a231473cdb, type: 2}
   sMRend: {fileID: 450153076}
   deathDelay: 30
+  ShouldUndie: 0
 --- !u!137 &450153076 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 13700000, guid: 6b60e937d3743bc498ed2ff117b1388f,
@@ -313,6 +392,7 @@ MonoBehaviour:
   voxel: {fileID: 1003761417340038, guid: 367e73669c0a7ad44a2ef5a231473cdb, type: 2}
   sMRend: {fileID: 671364363}
   deathDelay: 25
+  ShouldUndie: 0
 --- !u!137 &671364363 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 13700000, guid: 0104fd79a9cc67046b2ff554e5b6c8cc,
@@ -332,6 +412,68 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300002, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+--- !u!1001 &824770012
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.995
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.434
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.739
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 52d188ae8e9904d42972facde1ed020e, type: 2}
+    - target: {fileID: 100006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+      propertyPath: m_Name
+      value: swat (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
+  m_IsPrefabAsset: 0
 --- !u!1001 &989804440
 Prefab:
   m_ObjectHideFlags: 0
@@ -391,6 +533,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 82ca1ea65057e8e4a85102590e04f0e7, type: 2}
+    - target: {fileID: 100000, guid: 6b60e937d3743bc498ed2ff117b1388f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b60e937d3743bc498ed2ff117b1388f, type: 3}
   m_IsPrefabAsset: 0
@@ -502,7 +648,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voxel: {fileID: 1003761417340038, guid: 367e73669c0a7ad44a2ef5a231473cdb, type: 2}
   sMRend: {fileID: 1364863176}
-  deathDelay: 20
+  deathDelay: 3
+  ShouldUndie: 1
 --- !u!64 &1364863178
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -526,7 +673,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.442
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -534,7 +681,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.636
+      value: -0.95
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 0104fd79a9cc67046b2ff554e5b6c8cc, type: 3}
       propertyPath: m_LocalRotation.x
@@ -622,6 +769,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.958002
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0567a3961ef82f344be26637dfe858fd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0567a3961ef82f344be26637dfe858fd, type: 3}
   m_IsPrefabAsset: 0
@@ -649,6 +800,7 @@ MonoBehaviour:
   voxel: {fileID: 1003761417340038, guid: 367e73669c0a7ad44a2ef5a231473cdb, type: 2}
   sMRend: {fileID: 2144421041}
   deathDelay: 15
+  ShouldUndie: 0
 --- !u!64 &2144421043
 MeshCollider:
   m_ObjectHideFlags: 0
