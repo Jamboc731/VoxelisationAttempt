@@ -24,8 +24,11 @@ public class Voxelize : MonoBehaviour {
     //public Camera cam;
     public int deathDelay;
 <<<<<<< HEAD
+<<<<<<< HEAD
     private List<GameObject> points;
     public bool ShouldUndie;
+=======
+>>>>>>> parent of b4856a5... Rebuild? almost?
 =======
 >>>>>>> parent of b4856a5... Rebuild? almost?
 
@@ -128,8 +131,11 @@ public class Voxelize : MonoBehaviour {
             yield return new WaitForSeconds(0.00001f);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         
         StartCoroutine(Undie());
+=======
+>>>>>>> parent of b4856a5... Rebuild? almost?
 =======
 >>>>>>> parent of b4856a5... Rebuild? almost?
         
@@ -142,6 +148,7 @@ public class Voxelize : MonoBehaviour {
         {
             Gizmos.DrawSphere(bone.position, 0.01f);
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         while(frac < 1)
@@ -175,4 +182,8 @@ class RebuildSystem : ComponentSystem
 
 
 
+=======
+    }
+
+>>>>>>> parent of b4856a5... Rebuild? almost?
 }
