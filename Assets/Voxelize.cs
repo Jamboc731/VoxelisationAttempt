@@ -23,6 +23,7 @@ public class Voxelize : MonoBehaviour {
     private Color color = Color.red;
     //public Camera cam;
     public int deathDelay;
+    private List<GameObject> points;
 
     private void Start()
     {
@@ -31,6 +32,7 @@ public class Voxelize : MonoBehaviour {
         voxels = new List<GameObject>();
         mat = sMRend.material;
 
+        points = new List<GameObject>() { };
         usedVerts = new List<Vector3>() { };
 
         for (int i = 0; i < verts.Length; i++)
@@ -39,13 +41,18 @@ public class Voxelize : MonoBehaviour {
             {
                 GameObject inst = Instantiate(voxel, transform.TransformPoint(verts[i]), Quaternion.identity);
                 voxels.Add(inst);
-                usedVerts.Add(verts[i]);
+                points.Add(new GameObject("Point " + i));
+                usedVerts.Add(transform.TransformPoint(verts[i]));
             }
         }
 
+        for (int i = 0; i < usedVerts.Count; i++)
+        {
+            points[i].transform.position = usedVerts[i];
+        }
 
         bones = sMRend.bones;
-
+        int j = 0;
         foreach (GameObject vox in voxels)
         {
             dist = Mathf.Infinity;
@@ -59,7 +66,8 @@ public class Voxelize : MonoBehaviour {
                 }
             }
             vox.transform.SetParent(closestBone);
-
+            points[j].transform.SetParent(closestBone);
+            j++;
             
             ray = new Ray(vox.transform.position - ((closestBone.position) - (vox.transform.position)) * 1f, (closestBone.position) - vox.transform.position);
             //Debug.DrawRay(ray.origin, ray.direction * 0.5f, Color.red, 5);
@@ -110,28 +118,73 @@ public class Voxelize : MonoBehaviour {
 
         for (int i = 0; i < voxels.Count; i+=3)
         {
-            for (int a = 0; a < 3; a++)
+            try
             {
+                for (int a = 0; a < 3; a++)
+                {
 
-                voxels [i + a].transform.parent = null;
-                voxels [i + a].GetComponent<Rigidbody> ().isKinematic = false;
-                voxels[i + a].GetComponent<MeshRenderer>().material.color = Color.red;
-                Destroy (voxels [i + a].GetComponent<Rotatey> ());
-                //voxels[i + a].GetComponent<Rigidbody>().AddExplosionForce(250, transform.position, 5);
+                    voxels [i + a].transform.parent = null;
+                    voxels [i + a].GetComponent<Rigidbody> ().isKinematic = false;
+                    voxels[i + a].GetComponent<MeshRenderer>().material.color = Color.red;
+                    voxels[i + a].GetComponent<Rotatey>().enabled = false;
+                    //voxels[i + a].GetComponent<Rigidbody>().AddExplosionForce(250, transform.position, 5);
 
+                }
+
+            }
+            catch
+            {
+                break;
             }
             yield return new WaitForSeconds(0.00001f);
         }
+
+        StartCoroutine(Undie());
         
     }
 
-    private void OnDrawGizmos()
+    IEnumerator Undie()
     {
-        Gizmos.color = Color.yellow;
-        foreach (Transform bone in bones)
+        Debug.Log(points.Count);
+        yield return new WaitForSeconds(5);
+        float frac = 0;
+        int cur = 0;
+        List<Vector3> startPs = new List<Vector3>() { };
+
+        foreach (GameObject vox in voxels)
         {
-            Gizmos.DrawSphere(bone.position, 0.01f);
+            startPs.Add(vox.transform.position);
+            vox.GetComponent<Rigidbody>().isKinematic = true;
         }
+
+        while(frac < 1)
+        {
+            cur = 0;
+            foreach(GameObject vox in voxels)
+            {
+                Debug.Log(points[cur].transform.position);
+                vox.transform.position = Vector3.Lerp(startPs[cur], points[cur].transform.position, frac);
+                cur++;
+            }
+            yield return new WaitForSeconds(0.00001f);
+            frac += 0.01f;
+        }
+
+        for (int i = 0; i < voxels.Count; i++)
+        {
+            voxels[i].transform.SetParent(points[i].transform);
+            voxels[i].GetComponent<Rotatey>().enabled = true;
+        }
+
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    foreach (Transform bone in bones)
+    //    {
+    //        Gizmos.DrawSphere(bone.position, 0.01f);
+    //    }
+    //}
 
 }
