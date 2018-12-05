@@ -34,10 +34,10 @@ public class Voxelize : MonoBehaviour {
 
         for(int i = 0; i < verts.Length; i++)
         {
-            if (Physics.OverlapBox (transform.TransformPoint (verts [i]), voxel.transform.localScale / 2, Quaternion.identity, 0).Length < 1)
+            if (Physics.OverlapBox (transform.TransformPoint (verts [i]), voxel.transform.localScale / 2, Quaternion.identity, LayerMask.GetMask("Default")).Length < 1)
             {
                 ray = new Ray (verts [i] + (transform.TransformPoint (verts [i]) - transform.position), transform.position - transform.TransformPoint (verts [i]));
-                if(Physics.Raycast (ray, out hit, Mathf.Infinity, 9))
+                if(Physics.Raycast (ray, out hit, Mathf.Infinity, LayerMask.GetMask("Voxel")))
                 {
                     color = ((Texture2D) hit.transform.gameObject.GetComponent<SkinnedMeshRenderer> ().material.mainTexture).GetPixel ((int) hit.textureCoord [1], (int) hit.textureCoord [1]);
                 }
