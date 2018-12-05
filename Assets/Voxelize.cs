@@ -21,78 +21,91 @@ public class Voxelize : MonoBehaviour {
     private Ray ray;
     private RaycastHit hit;
     private Color color = Color.red;
+    //public Camera cam;
 
-    private void Start ()
+    private void Start()
     {
         mesh = sMRend.sharedMesh;
         verts = mesh.vertices;
-        voxels = new List<GameObject> ();
+        voxels = new List<GameObject>();
         mat = sMRend.material;
-        tex = (Texture2D) mat.mainTexture;
 
 
 
-        for(int i = 0; i < verts.Length; i++)
+        for (int i = 0; i < verts.Length; i++)
         {
-            if (Physics.OverlapBox (transform.TransformPoint (verts [i]), voxel.transform.localScale / 2, Quaternion.identity, LayerMask.GetMask("Default")).Length < 1)
+            if (Physics.OverlapBox(transform.TransformPoint(verts[i]), voxel.transform.localScale / 2, Quaternion.identity, LayerMask.GetMask("Voxel")).Length < 1)
             {
-                ray = new Ray (verts [i] + (transform.TransformPoint (verts [i]) - transform.position), transform.position - transform.TransformPoint (verts [i]));
-                if(Physics.Raycast (ray, out hit, Mathf.Infinity, LayerMask.GetMask("Voxel")))
-                {
-                    color = ((Texture2D) hit.transform.gameObject.GetComponent<SkinnedMeshRenderer> ().material.mainTexture).GetPixel ((int) hit.textureCoord [1], (int) hit.textureCoord [1]);
-                }
-                GameObject inst = Instantiate (voxel, transform.TransformPoint (verts [i]), Quaternion.identity);
-                inst.GetComponent<MeshRenderer> ().material.color = color;
-                voxels.Add (inst);
-                //usedVerts.Add (verts [i]);                
+                GameObject inst = Instantiate(voxel, transform.TransformPoint(verts[i]), Quaternion.identity);
+                voxels.Add(inst);
+                //usedVerts.Add(verts[i]);
             }
         }
 
-        //sMRend.sharedMesh = null;
-        Destroy(this.gameObject.GetComponent<Collider> ());
 
         bones = sMRend.bones;
-        
+
         foreach (GameObject vox in voxels)
         {
             dist = Mathf.Infinity;
             for (int i = 0; i < bones.Length; i++)
             {
-                curDist = Vector3.Distance (vox.transform.position, bones [i].position);
+                curDist = Vector3.Distance(vox.transform.position, bones[i].position);
                 if (curDist < dist)
                 {
                     dist = curDist;
-                    closestBone = bones [i];
+                    closestBone = bones[i];
                 }
             }
-            vox.transform.SetParent (closestBone);
+            vox.transform.SetParent(closestBone);
 
+            
+            ray = new Ray(vox.transform.position - ((closestBone.position) - (vox.transform.position)) * 1f, (closestBone.position) - vox.transform.position);
+            //Debug.DrawRay(ray.origin, ray.direction * 0.5f, Color.red, 5);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Default")))
+            {
+                tex = (Texture2D)hit.transform.gameObject.GetComponent<SkinnedMeshRenderer>().material.mainTexture;
+                color = tex.GetPixel((int)(hit.textureCoord[0] * tex.width), (int)(hit.textureCoord[1] * tex.height));
+                Debug.Log(tex.GetPixel((int)(hit.textureCoord[0] * tex.width), (int)(hit.textureCoord[1] * tex.height)));
+                //color = new Color(color.r / 255, color.b / 255, color.g / 255, 1);
+                //Debug.Log(color);
+                
+                //Debug.Log(((Texture2D)hit.transform.gameObject.GetComponent<SkinnedMeshRenderer>().material.mainTexture).GetPixel((int)hit.textureCoord[0], (int)hit.textureCoord[1]));
+                vox.GetComponent<MeshRenderer>().material.color = color;
+
+            }
         }
+        sMRend.sharedMesh = null;
+        Destroy(this.gameObject.GetComponent<Collider>());
 
-        tempVox = voxels.ToArray ();
+        tempVox = voxels.ToArray();
 
-        voxels = tempVox.OrderBy (tempVox => tempVox.transform.position.y).ToList();
+        voxels = tempVox.OrderBy(tempVox => tempVox.transform.position.y).ToList();
 
-        voxels.Reverse ();
+        voxels.Reverse();
 
-        StartCoroutine (Die ());
+        StartCoroutine(Die());
 
     }
 
-    //private void Update ()
+    //private void Update()
     //{
     //    RaycastHit hit;
-    //    if (Input.GetButtonDown ("Fire1"))
+    //    if (Input.GetButtonDown("Fire1"))
     //    {
-    //        Physics.Raycast (cam.ScreenPointToRay (Input.mousePosition), out hit, Mathf.Infinity);
-    //        Debug.Log (((Texture2D) hit.transform.gameObject.GetComponent<SkinnedMeshRenderer> ().material.mainTexture).GetPixel ((int) hit.textureCoord [1], (int) hit.textureCoord [1]));
+    //        Debug.Log("Fire");
+    //        ray = cam.ScreenPointToRay(Input.mousePosition);
+    //        Physics.Raycast(ray, out hit, Mathf.Infinity);
+    //        Debug.DrawRay(ray.origin, ray.direction * 5, Color.red, 5);
+    //        tex = ((Texture2D)hit.transform.gameObject.GetComponent<SkinnedMeshRenderer>().material.mainTexture);
+    //        Debug.Log(tex.GetPixel((int)hit.textureCoord[0] * tex.width, (int)hit.textureCoord[1]) * tex.height);
     //        //Debug.DrawRay (cam.ScreenPointToRay (Input.mousePosition).origin, cam.ScreenPointToRay (Input.mousePosition).direction * 10, Color.red, 5);
     //    }
     //}
 
     IEnumerator Die ()
     {
-        yield return new WaitForSeconds (5);
+        yield return new WaitForSeconds (20);
 
         for (int i = 0; i < voxels.Count; i+=3)
         {
@@ -101,13 +114,23 @@ public class Voxelize : MonoBehaviour {
 
                 voxels [i + a].transform.parent = null;
                 voxels [i + a].GetComponent<Rigidbody> ().isKinematic = false;
+                voxels[i + a].GetComponent<MeshRenderer>().material.color = Color.red;
                 Destroy (voxels [i + a].GetComponent<Rotatey> ());
-                //vox.GetComponent<Rigidbody> ().AddExplosionForce (250, transform.position, 5);
+                //voxels[i + a].GetComponent<Rigidbody>().AddExplosionForce(250, transform.position, 5);
 
             }
-            yield return new WaitForSeconds (0.00001f);
+            yield return new WaitForSeconds(0.00001f);
         }
         
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        foreach (Transform bone in bones)
+        {
+            Gizmos.DrawSphere(bone.position, 0.01f);
+        }
     }
 
 }
