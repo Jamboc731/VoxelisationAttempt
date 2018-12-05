@@ -22,6 +22,7 @@ public class Voxelize : MonoBehaviour {
     private RaycastHit hit;
     private Color color = Color.red;
     //public Camera cam;
+    public int deathDelay;
 
     private void Start()
     {
@@ -30,7 +31,7 @@ public class Voxelize : MonoBehaviour {
         voxels = new List<GameObject>();
         mat = sMRend.material;
 
-
+        usedVerts = new List<Vector3>() { };
 
         for (int i = 0; i < verts.Length; i++)
         {
@@ -38,7 +39,7 @@ public class Voxelize : MonoBehaviour {
             {
                 GameObject inst = Instantiate(voxel, transform.TransformPoint(verts[i]), Quaternion.identity);
                 voxels.Add(inst);
-                //usedVerts.Add(verts[i]);
+                usedVerts.Add(verts[i]);
             }
         }
 
@@ -105,7 +106,7 @@ public class Voxelize : MonoBehaviour {
 
     IEnumerator Die ()
     {
-        yield return new WaitForSeconds (20);
+        yield return new WaitForSeconds (deathDelay);
 
         for (int i = 0; i < voxels.Count; i+=3)
         {
